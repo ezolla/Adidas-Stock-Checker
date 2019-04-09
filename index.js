@@ -14,11 +14,11 @@ client.on("ready", () => {
   client.user
     .setPresence({
       game: {
-        name: "!adistock PID | PN"
+        name: `${config.Discord.prefix}adistock PID | @exhwn`
       },
       status: "avaliable"
     })
-    .then(log.green("Presence Set!"));
+    .then(log.green("Discord Presence Set!"));
 });
 
 // Message Event
@@ -29,14 +29,17 @@ client.on("message", msg => {
     let args = msg.content.split(" ");
     let pid = args[1];
     if (pid && pid.length === 6) {
+      log.green("Successfully Recieved PID Arugment");
       getStock(msg, pid);
     } else {
+      log.red("Failed to Recieve PID Arugment");
       sendFail(msg);
     }
   }
 });
 
-const getStock = async (msg, pid) => {
+// Get Stock Method
+const getStock = (msg, pid) => {
   var infoOptions = {
     uri: `https://www.adidas.com/api/products/${pid}`,
     forever: true,
@@ -101,7 +104,7 @@ const getStock = async (msg, pid) => {
     });
 };
 
-// Send to Discord if Successful
+// Send Data to Discord if Successful
 const sendSuccess = (
   msg,
   resultMsg,
@@ -114,7 +117,7 @@ const sendSuccess = (
 ) => {
   msg.channel.send({
     embed: {
-      color: 0xff0000,
+      color: 0x45c577,
       author: {
         name: "Adidas Stock Checker",
         icon_url: "https://i.gyazo.com/a031d16c2a90b5fc6cf3c6563b9ecffe.png"
@@ -149,17 +152,17 @@ const sendSuccess = (
       timestamp: new Date(),
       footer: {
         icon_url: "https://i.gyazo.com/a031d16c2a90b5fc6cf3c6563b9ecffe.png",
-        text: "Adidas Stock Checker | Phoenix Notify"
+        text: "Adidas Stock Checker | @exhwn"
       }
     }
   });
 };
 
-// Send to Discord if Failed
+// Send MSG to Discord if Failed
 const sendFail = msg => {
   msg.channel.send({
     embed: {
-      color: 0xff0000,
+      color: 0x45c577,
       author: {
         name: "Adidas Stock Checker",
         icon_url: "https://i.gyazo.com/a031d16c2a90b5fc6cf3c6563b9ecffe.png"
@@ -169,7 +172,7 @@ const sendFail = msg => {
       timestamp: new Date(),
       footer: {
         icon_url: "https://i.gyazo.com/a031d16c2a90b5fc6cf3c6563b9ecffe.png",
-        text: "Adidas Stock Checker | Phoenix Notify"
+        text: "Adidas Stock Checker | @exhwn"
       }
     }
   });
