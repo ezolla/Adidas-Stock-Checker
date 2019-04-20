@@ -2,6 +2,7 @@
 const rp = require("request-promise");
 const Discord = require("discord.js");
 
+// Local Imports
 const config = require("./config");
 const log = require("./classes/log");
 
@@ -63,6 +64,8 @@ const getStock = (msg, pid) => {
       // Saving Static Data
       let id = json["id"];
       let name = json["name"];
+      let price =
+        json["product_link_list"][2]["pricing_information"]["standard_price"];
       let link = json["meta_data"]["canonical"].slice(2);
       let img = json["view_list"][0]["image_url"];
       let waitingRoom = json["attribute_list"]["isWaitingRoomProduct"];
@@ -90,6 +93,7 @@ const getStock = (msg, pid) => {
           resultMsg,
           totalStock,
           id,
+          price,
           name,
           link,
           img,
@@ -110,6 +114,7 @@ const sendSuccess = (
   resultMsg,
   totalStock,
   id,
+  price,
   name,
   link,
   img,
@@ -134,18 +139,23 @@ const sendSuccess = (
           inline: true
         },
         {
+          name: "Price",
+          value: `$${price}`,
+          inline: true
+        },
+        {
           name: "Waiting Room?",
           value: waitingRoom,
           inline: true
         },
         {
-          name: "Availability",
-          value: resultMsg,
+          name: "Total Stock",
+          value: totalStock,
           inline: true
         },
         {
-          name: "Total Stock",
-          value: totalStock,
+          name: "Availability",
+          value: resultMsg,
           inline: true
         }
       ],
