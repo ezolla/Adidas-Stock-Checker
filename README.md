@@ -1,6 +1,6 @@
 # Adidas Stock Checker
 
-Monitor your favorite twitter accounts easily, with discord webhook integration!
+Check stock levels for your favorite Adidas products in realtime.
 
 ## Getting Started
 
